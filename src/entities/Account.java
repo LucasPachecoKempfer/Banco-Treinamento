@@ -22,13 +22,23 @@ public class Account {
 
     public void withdraw(double amount) {
 
+        if (amount <= 0) {
+            throw new WithdrawException("The amount must be positive");
+        }
+
         if (amount > getWithdrawLimit()){
             throw new WithdrawException("The amount exceeds withdraw limit");
-        } else if (amount > getBalance()) {
-            throw new WithdrawException("Not enough balance");
-        } else {
-            System.out.println("New balance: " + (amount - getBalance()));
         }
+
+        if (amount > getBalance()) {
+            throw new WithdrawException("Not enough balance");
+        }
+
+        double newBalance = getBalance() - amount;
+        setBalance(newBalance);
+
+        System.out.println("New balance: " + getBalance());
+
     }
 
     public Integer getNumber() {
